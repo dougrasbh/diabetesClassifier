@@ -1,0 +1,21 @@
+{
+  "best_by_roc_auc": {
+    "run_name": "exp-3-gradient-boosting",
+    "model_tag": "GradientBoostingClassifier",
+    "accuracy": 0.7532467532467533,
+    "f1_weighted": 0.748121878121878,
+    "roc_auc": 0.8327777777777777
+  },
+  "features": [
+    "Pregnancies",
+    "Glucose",
+    "BloodPressure",
+    "SkinThickness",
+    "Insulin",
+    "BMI",
+    "DiabetesPedigreeFunction",
+    "Age"
+  ],
+  "target": "Outcome (1 = diabetes)",
+  "note": "Promova a vers\u00e3o desejada no Model Registry do DagsHub para @production."
+}

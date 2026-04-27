@@ -1,0 +1,22 @@
+# Credenciais — NUNCA vão para o Git
+.env
+
+# Modelo treinado — versionado no MLflow/DagsHub, não no Git
+model.pkl
+
+# Dados brutos / processados (rastreados pelo DVC)
+/data/raw/
+/data/processed/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Editores
+.vscode/
+.idea/
+.DS_Store

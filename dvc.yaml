@@ -1,0 +1,23 @@
+stages:
+  ingest:
+    cmd: python3 -m src.ingestion
+    outs:
+      - data/raw/diabetes_raw.parquet:
+          cache: true
+  process:
+    cmd: python3 -m src.preprocessing
+    deps:
+      - data/raw/diabetes_raw.parquet
+      - src/preprocessing.py
+    outs:
+      - data/processed/features.parquet:
+          cache: true
+  train:
+    cmd: python3 -m src.train
+    deps:
+      - data/processed/features.parquet
+      - src/train.py
+      - src/prepare_data.py
+    outs:
+      - artifacts/training_summary.json:
+          cache: false

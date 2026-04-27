@@ -1,0 +1,45 @@
+schema: '2.0'
+stages:
+  ingest:
+    cmd: python3 -m src.ingestion
+    outs:
+    - path: data/raw/diabetes_raw.parquet
+      hash: md5
+      md5: 01eb75aa1e610edbf0b2b996976b95e8
+      size: 16962
+  process:
+    cmd: python3 -m src.preprocessing
+    deps:
+    - path: data/raw/diabetes_raw.parquet
+      hash: md5
+      md5: 01eb75aa1e610edbf0b2b996976b95e8
+      size: 16962
+    - path: src/preprocessing.py
+      hash: md5
+      md5: de4d92eefaf57a2019d895fe25bd6abb
+      size: 1766
+    outs:
+    - path: data/processed/features.parquet
+      hash: md5
+      md5: 4769114ae6b48abe31ee476ecfeb5484
+      size: 14130
+  train:
+    cmd: python3 -m src.train
+    deps:
+    - path: data/processed/features.parquet
+      hash: md5
+      md5: 4769114ae6b48abe31ee476ecfeb5484
+      size: 14130
+    - path: src/prepare_data.py
+      hash: md5
+      md5: c6e314d611968a679ea5d824d0d141ec
+      size: 2619
+    - path: src/train.py
+      hash: md5
+      md5: aec3c2f80a35401e21c92881b9c196bb
+      size: 5870
+    outs:
+    - path: artifacts/training_summary.json
+      hash: md5
+      md5: 9f07831e9fd7fe0e956c696f875c277b
+      size: 522

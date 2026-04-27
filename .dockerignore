@@ -1,0 +1,21 @@
+# O model.pkl é gerado durante o docker build via evaluate.py
+model.pkl
+
+# Credenciais locais (as credenciais chegam via --build-arg no Render)
+.env
+
+# Cache e ambientes virtuais
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Git e editor
+.git
+.gitignore
+.vscode/
+.DS_Store
+
+# Docs
+README.md
+*.md
