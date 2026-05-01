@@ -76,6 +76,15 @@ def main():
         try:
             client.table(table).insert(chunk).execute()
         except Exception as e:
+            msg = str(e)
+            if "PGRST205" in msg:
+                raise RuntimeError(
+                    "Erro Supabase (PGRST205): tabela não encontrada no schema cache.\n"
+                    f"Tabela configurada: '{table}'.\n"
+                    "Verifique se você executou scripts/create_diabetes_table.sql no Supabase SQL Editor, "
+                    "se a tabela está no schema public e se SUPABASE_DIABETES_TABLE contém apenas o nome da "
+                    "tabela (ex.: diabetes, sem 'public.')."
+                ) from e
             raise RuntimeError(f"Erro Supabase no lote {i}-{i + len(chunk)}: {e}") from e
         print(f"Inseridas {min(i + BATCH_SIZE, n)}/{n} linhas…")
 

@@ -1,4 +1,5 @@
 import json
+import sys
 from pathlib import Path
 
 import joblib
@@ -7,6 +8,11 @@ import pandas as pd
 import streamlit as st
 
 ROOT = Path(__file__).resolve().parent.parent
+# O pipeline em model.pkl referencia classes em `src.*`; o Streamlit precisa do raiz no PYTHONPATH.
+_root = str(ROOT)
+if _root not in sys.path:
+    sys.path.insert(0, _root)
+
 MODEL_PATH = ROOT / "model.pkl"
 METRICS_PATH = ROOT / "artifacts" / "model_metrics.json"
 TRAINING_SUMMARY_PATH = ROOT / "artifacts" / "training_summary.json"
@@ -31,7 +37,8 @@ def load_model():
         st.error(
             f"Arquivo **model.pkl** não encontrado em `{MODEL_PATH}`. "
             "Execute `python -m src.evaluate` (com modelo em @production no MLflow) "
-            "ou coloque um modelo treinado na raiz do projeto."
+            "ou coloque um modelo treinado na raiz do projeto. "
+            "No Docker, passe `--build-arg DAGSHUB_*` para o build correr `src.evaluate` e embutir o modelo."
         )
         st.stop()
     return joblib.load(MODEL_PATH)
@@ -67,7 +74,7 @@ st.title("🩺 Predição de diabetes (Pima Indians)")
 st.markdown(
     "Classificação binária (**Outcome**): risco de diabetes com base em variáveis clínicas. "
     "O modelo é um pipeline sklearn (limpeza de zeros, imputação por mediana, normalização + classificador) "
-    "carregado de `model.pkl` (gerado no build Docker ou via `python -m src.evaluate`)."
+    "carregado de `model.pkl` (gerado manualmente via `python -m src.evaluate`)."
 )
 
 metrics = load_metrics_block()

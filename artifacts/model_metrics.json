@@ -1,8 +1,8 @@
 {
   "accuracy": 0.7532467532467533,
-  "f1_weighted": 0.748121878121878,
-  "roc_auc": 0.8327777777777777,
-  "model_uri": "models:/DiabetesClassifier/latest",
+  "f1_weighted": 0.7551351709514975,
+  "roc_auc": 0.8244444444444444,
+  "model_uri": "models:/DiabetesClassifier@production",
   "features": [
     "Pregnancies",
     "Glucose",
